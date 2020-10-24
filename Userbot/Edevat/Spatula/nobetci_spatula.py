@@ -58,7 +58,7 @@ def nobetci_eczane(il=None, ilce=None, cikti='gorsel_veri'):
             'telefon'   : telf
         })
 
-    basliklar = [anahtar for anahtar in liste[0].keys()]
+    basliklar = list(liste[0].keys())
 
     if cikti == 'json_veri':
         return liste
