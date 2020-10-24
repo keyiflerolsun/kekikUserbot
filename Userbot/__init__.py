@@ -1,5 +1,6 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
+import sys
 from pyrogram import Client, __version__
 from konsolTaban._evrensel.tanimlar import bellenim_surumu
 import os, sys
@@ -24,11 +25,11 @@ def log_ver(bisi):
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     hata("""En az python 3.6 sürümüne sahip olmanız gerekir.
               Birden fazla özellik buna bağlıdır. Bot kapatılıyor.""")
-    quit(1)
+    sys.exit(1)
 
 if (bellenim_surumu.split('-')[-1] != 'aws') and (not os.path.exists("ayar.env")): # Heroku Geçmek için aws
    hata("\n\tLütfen ayar.env dosyanızı oluşturun..\n")
-   quit(1)
+   sys.exit(1)
 
 load_dotenv("ayar.env")
 
@@ -38,7 +39,7 @@ AYAR_KONTROL = os.environ.get("___________LUTFEN_______BU_____SATIRI_____SILIN__
 
 if AYAR_KONTROL:
     hata("\n\tLütfen ayar.env dosyanızı düzenlediğinize emin olun /veya\n\tilk hashtag'de belirtilen satırı kaldırın..\n")
-    quit(1)
+    sys.exit(1)
 
 API_ID          = os.environ.get("API_ID", None)
 API_HASH        = os.environ.get("API_HASH", None)
@@ -49,7 +50,7 @@ if not os.path.isdir(INDIRME_ALANI): os.makedirs(INDIRME_ALANI)
 
 if STRING_SESSION.startswith('-') or len(STRING_SESSION) < 351:
     hata("\n\tMuhtemelen String Session Hatalı..!\n")
-    quit(1)
+    sys.exit(1)
 
 try:
     kekikUserbot        = Client(
@@ -60,7 +61,7 @@ try:
     )
 except ValueError:
     hata("\n\tLütfen ayar.env dosyanızı DÜZGÜNCE! oluşturun..\n")
-    quit(1)
+    sys.exit(1)
 
 DESTEK_KOMUT = {}
 
