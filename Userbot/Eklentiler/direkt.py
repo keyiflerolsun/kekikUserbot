@@ -1,6 +1,6 @@
 # https://github.com/muhammedfurkan/UniBorg/blob/master/stdplugins/direct_link.py
 
-from Userbot.Edevat.zenginLog import log_yolla, hata_log
+from Userbot.Edevat.zenginLog import log_yolla
 from Userbot import DESTEK_KOMUT
 from pathlib import Path
 
