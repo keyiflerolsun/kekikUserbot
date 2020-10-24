@@ -59,7 +59,7 @@ async def yukle_drive(dosya_yolu:str, mesaj_duzenle, drive_id:str=None, drive_ad
 
     mesaj = ""
     mesaj += f"`{drive_adi}` **Diskine** " if drive_adi else "`Root` **Diskine** "
-    mesaj += f"__Yükledim Kanka.. :__"
+    mesaj += "__Yükledim Kanka.. :__"
     link = f"https://drive.google.com/open?id={dosya_id}"
 
     return mesaj, link, dosya_adi

@@ -153,7 +153,7 @@ async def gdizin(client, message):
 
         await ilk_mesaj.edit(f"__Burdasın kanka;__\n\n**{drive_adi}**\n`{drive_id}`")
     except KeyError:
-        await ilk_mesaj.edit(f"__Burdasın kanka;__\n\n**Root**")
+        await ilk_mesaj.edit("__Burdasın kanka;__\n\n**Root**")
 
 @Client.on_message(filters.command(['gara'],['!','.','/']) & filters.me)
 async def gara(client, message):

@@ -49,7 +49,7 @@ async def nobetci(client, message):
     try:
         for eczane in nobetci_eczane(il, ilce, "json_veri"):
             mesaj += f"**\n\t⚕ {eczane['ad']}**"
-            mesaj += f"\n📍"
+            mesaj += "\n📍"
             if eczane['mahalle']:
                 mesaj += f"`{eczane['mahalle']}`\n"
             mesaj += f"__{eczane['adres']}__"
