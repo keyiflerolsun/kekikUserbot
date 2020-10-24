@@ -8,14 +8,19 @@ from httplib2 import RedirectMissingLocation
 from mimetypes import guess_type
 from math import floor
 
-async def yukle_drive(dosya_yolu:str, mesaj_duzenle, drive_id:str=None, drive_adi:str=None, dizin_id:str=None) -> str:
-    drive_service  = g_yetki()
+
+async def yukle_drive(dosya_yolu: str,
+                      mesaj_duzenle,
+                      drive_id: str = None,
+                      drive_adi: str = None,
+                      dizin_id: str = None) -> str:
+    drive_service = g_yetki()
     mime_turu = guess_type(dosya_yolu)[0]
     mime_turu = mime_turu or "text/plain"
     dosya_adi = path.basename(dosya_yolu)
 
     try:
-        drive_id  = environ["ORTAK_DRIVE_ID"]
+        drive_id = environ["ORTAK_DRIVE_ID"]
         drive_adi = environ["ORTAK_DRIVE_ADI"]
 
         govde = {
@@ -29,12 +34,13 @@ async def yukle_drive(dosya_yolu:str, mesaj_duzenle, drive_id:str=None, drive_ad
             "description": f"{SESSION_ADI} üzerinden yüklenmiştir.."
         }
 
-    dosya_govde = MediaFileUpload(dosya_yolu, mimetype=mime_turu, chunksize=-1, resumable=True)
-    yuklenen_dosya = drive_service.files().create(
-        supportsAllDrives=True,
-        body=govde,
-        media_body=dosya_govde
-    )
+    dosya_govde = MediaFileUpload(dosya_yolu,
+                                  mimetype=mime_turu,
+                                  chunksize=-1,
+                                  resumable=True)
+    yuklenen_dosya = drive_service.files().create(supportsAllDrives=True,
+                                                  body=govde,
+                                                  media_body=dosya_govde)
 
     yanit = None
     gorunen_mesaj = ""
