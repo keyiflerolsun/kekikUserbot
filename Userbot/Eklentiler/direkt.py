@@ -1,41 +1,40 @@
 # https://github.com/muhammedfurkan/UniBorg/blob/master/stdplugins/direct_link.py
 
+import requests
+import urllib.parse
+import re
+import json
+from humanize import naturalsize
+from bs4 import BeautifulSoup
+from random import choice
+from os import popen
+from pyrogram import Client, filters
 from Userbot.Edevat.zenginLog import log_yolla
 from Userbot import DESTEK_KOMUT
 from pathlib import Path
 
 DESTEK_KOMUT.update({
-    Path(__file__).stem : {
-        "aciklama"  : "`GoogleDrive`, `ZippyShare`, `Mega.nz`, `Yandex.Disk`, `Cloud.Mail.ru`, `MediaFire`, `SourceForge`, `OSDN`, `GitHub`, `AndroidFileHost`\nEntegreli direkt link ayıklayıcı..",
-        "kullanim"  : [
-            "Link",
-            "Yanıtlanan Link"
-            ],
-        "ornekler"  : [
-            ".direkt link"
-            ]
+    Path(__file__).stem: {
+        "aciklama":
+        "`GoogleDrive`, `ZippyShare`, `Mega.nz`, `Yandex.Disk`, `Cloud.Mail.ru`, `MediaFire`, `SourceForge`, `OSDN`, `GitHub`, `AndroidFileHost`\nEntegreli direkt link ayıklayıcı..",
+        "kullanim": ["Link", "Yanıtlanan Link"],
+        "ornekler": [".direkt link"]
     }
 })
 
-from pyrogram import Client, filters
-import json, re, urllib.parse, requests
-from os import popen
-from random import choice
-from bs4 import BeautifulSoup
-from humanize import naturalsize
 
-@Client.on_message(filters.command(['direkt'], ['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['direkt'], ['!', '.', '/']) & filters.me)
 async def direkt(client, message):
     # < Başlangıç
     await log_yolla(client, message)
     ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    #------------------------------------------------------------- Başlangıç >
+                                   disable_web_page_preview=True,
+                                   parse_mode="Markdown")
+    # ------------------------------------------------------------- Başlangıç >
 
     await ilk_mesaj.edit("`İşleniyor...`")
-    gelen_link = message.command[1] if not message.reply_to_message else message.reply_to_message.text
+    gelen_link = message.command[
+        1] if not message.reply_to_message else message.reply_to_message.text
 
     cevap = ''
     linkler = re.findall(r'\bhttps?://.*\.\S+', gelen_link)
@@ -64,7 +63,8 @@ async def direkt(client, message):
         elif 'androidfilehost.com' in link:
             cevap += androidfilehost(link)
         else:
-            cevap += '`' + re.findall(r"\bhttps?://(.*?[^/]+)",link)[0] + 'desteklenmiyor..`\n'
+            cevap += '`' + re.findall(r"\bhttps?://(.*?[^/]+)",
+                                      link)[0] + 'desteklenmiyor..`\n'
     await ilk_mesaj.edit(cevap)
 
 
