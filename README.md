@@ -1,8 +1,8 @@
 # 🤖 keyifUserBot
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/07b0824a27b44988b188af7875456f62)](https://www.codacy.com/gh/keyiflerolsun/keyifUserBot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=keyiflerolsun/keyifUserBot&amp;utm_campaign=Badge_Grade) [![DeepSource](https://deepsource.io/gh/keyiflerolsun/keyifUserBot.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/keyiflerolsun/keyifUserBot/?ref=repository-badge) ![Repo Boyutu](https://img.shields.io/github/repo-size/keyiflerolsun/keyifUserBot) ![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/keyiflerolsun/keyifUserBot&title=Profile%20Views) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/keyiflerolsun/keyifUserBot)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/07b0824a27b44988b188af7875456f62)](https://www.codacy.com/gh/keyiflerolsun/keyifUserBot/dashboard?utm_source=github.com&utm_medium=referral&utm_content=keyiflerolsun/keyifUserBot&utm_campaign=Badge_Grade) [![DeepSource](https://deepsource.io/gh/keyiflerolsun/keyifUserBot.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/keyiflerolsun/keyifUserBot/?ref=repository-badge) ![Repo Boyutu](https://img.shields.io/github/repo-size/keyiflerolsun/keyifUserBot) ![Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/keyiflerolsun/keyifUserBot&title=Profile%20Views) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/keyiflerolsun/keyifUserBot)
 
-[kekikUserbot](https://github.com/KekikAkademi/kekikUserbot) *tabanı kullanılarak oluşturulmuş* **kişisel bot..**
+[kekikUserbot](https://github.com/KekikAkademi/kekikUserbot) _tabanı kullanılarak oluşturulmuş_ **kişisel bot..**
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://GitHub.com/keyiflerolsun/)
@@ -22,7 +22,7 @@ python3 StringSessionOlustur.py
 
 [![Repl.it](https://img.shields.io/badge/REPL%20RUN-Run%20Online-blue.svg)](https://telepyrobot.skuzzyxd.repl.run/)
 
-`String Session` **Kayıtlı Mesajlar**'*ınıza Eklenir,* **güvenliğinden [TelePyroBot](https://github.com/SkuzzyxD/TelePyroBot/) sorumludur..**
+`String Session` **Kayıtlı Mesajlar**'_ınıza Eklenir,_ **güvenliğinden [TelePyroBot](https://github.com/SkuzzyxD/TelePyroBot/) sorumludur..**
 
 ## :rocket: Deploy Edin
 
@@ -53,21 +53,21 @@ python3 basla.py
 
 ## :green_heart: Özel Teşekkürler
 
-* **Bir çok şey için** [By_Azade](https://github.com/muhammedfurkan) 🕊
-* [TeleUserBot](https://github.com/ynsmrkrblt/TeleUserBot) **için** [ynsmrkrblt](https://github.com/ynsmrkrblt) 🕊
-* [TelePyroBot](https://github.com/SkuzzyxD/TelePyroBot) **için** [SkuzzyxD](https://github.com/SkuzzyxD) 🕊
-* [Nana-Remix](https://github.com/pokurt/Nana-Remix) **için** [pokurt](https://github.com/pokurt) 🕊
-* [AsenaUserBot](https://github.com/Quiec/AsenaUserBot) **için** [Quiec](https://github.com/Quiec) 🕊
+- **Bir çok şey için** [By_Azade](https://github.com/muhammedfurkan) 🕊
+- [TeleUserBot](https://github.com/ynsmrkrblt/TeleUserBot) **için** [ynsmrkrblt](https://github.com/ynsmrkrblt) 🕊
+- [TelePyroBot](https://github.com/SkuzzyxD/TelePyroBot) **için** [SkuzzyxD](https://github.com/SkuzzyxD) 🕊
+- [Nana-Remix](https://github.com/pokurt/Nana-Remix) **için** [pokurt](https://github.com/pokurt) 🕊
+- [AsenaUserBot](https://github.com/Quiec/AsenaUserBot) **için** [Quiec](https://github.com/Quiec) 🕊
 
 ## :globe_with_meridians: Telif Hakkı ve Lisans
 
-* *Copyright (C) 2020 by* [keyiflerolsun](https://github.com/keyiflerolsun) ❤️️
-* [GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007](https://github.com/keyiflerolsun/keyifUserBot/blob/master/LICENSE) *Koşullarına göre lisanslanmıştır..*
+- _Copyright (C) 2020 by_ [keyiflerolsun](https://github.com/keyiflerolsun) ❤️️
+- [GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007](https://github.com/keyiflerolsun/keyifUserBot/blob/master/LICENSE) _Koşullarına göre lisanslanmıştır.._
 
 ## :recycle: İletişim
 
-*Benimle iletişime geçmek isterseniz, **Telegram**'dan mesaj göndermekten çekinmeyin;* [@keyiflerolsun](https://t.me/keyiflerolsun)
+_Benimle iletişime geçmek isterseniz, **Telegram**'dan mesaj göndermekten çekinmeyin;_ [@keyiflerolsun](https://t.me/keyiflerolsun)
 
 ##
 
-> **[@KekikAkademi](https://t.me/KekikAkademi)** *için yazılmıştır..*
+> **[@KekikAkademi](https://t.me/KekikAkademi)** _için yazılmıştır.._
