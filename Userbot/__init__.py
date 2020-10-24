@@ -4,7 +4,6 @@ import sys
 from pyrogram import Client, __version__
 from konsolTaban._evrensel.tanimlar import bellenim_surumu
 import os
-import sys
 from dotenv import load_dotenv
 from rich.console import Console
 
