@@ -97,7 +97,10 @@ def gdrive(url: str) -> str:
     except KeyError:
         # In case of download warning page
         page = BeautifulSoup(download.content, 'lxml')
-        export = drive + page.find('a', {'id': 'uc-download-link'}).get('href')
+        try:
+            export = drive + page.find('a', {'id': 'uc-download-link'}).get('href')
+        except AttributeError:
+            return "__dizin linki olduğu için direkt link veremiyorum kanka..__"
         name = page.find('span', {'class': 'uc-name-size'}).text
         response = requests.get(export,
                                 stream=True,
