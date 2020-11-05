@@ -6,7 +6,7 @@ from pathlib import Path
 
 DESTEK_KOMUT.update({
     Path(__file__).stem : {
-        "aciklama" : "sabah.com.tr'den ezan vakti bilgilerini verir..",
+        "aciklama" : "KekikSpatula'dan ezan vakti bilgilerini verir..",
         "kullanim" : [
             "il"
             ],
@@ -17,7 +17,7 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
-from Userbot.Edevat.Spatula.ezan_spatula import ezan_vakti
+from KekikSpatula import Ezan
 
 @Client.on_message(filters.command(['ezan'],['!','.','/']) & filters.me)
 async def ezan(client, message):
@@ -34,15 +34,27 @@ async def ezan(client, message):
         await ilk_mesaj.edit("__Arama yapabilmek için `il` ve `ilçe` girmelisiniz..__")
         return
 
-    il   = girilen_yazi[1].lower()  # komut hariç birinci kelime
+    il   = girilen_yazi[1].replace('İ', "i").lower()  # komut hariç birinci kelime
 
     tr2eng  = str.maketrans(" .,-*/+-ıİüÜöÖçÇşŞğĞ", "________iIuUoOcCsSgG")
     il      = il.translate(tr2eng)
 
     try:
-        await ilk_mesaj.edit(ezan_vakti(il))
+        ezan = Ezan(il).veri()['veri'][0]
     except IndexError:
         await ilk_mesaj.edit(f'`{il}` __diye bir yer bulamadım..__')
+        return
+
+    mesaj = f"📍 `{ezan['il']}` __için Ezan Vakitleri;__\n\n"
+    mesaj += f"🏙 **İmsak   :** `{ezan['imsak']}`\n"
+    mesaj += f"🌅 **Güneş   :** `{ezan['gunes']}`\n"
+    mesaj += f"🌇 **Öğle    :** `{ezan['ogle']}`\n"
+    mesaj += f"🌆 **İkindi  :** `{ezan['ikindi']}`\n"
+    mesaj += f"🌃 **Akşam   :** `{ezan['aksam']}`\n"
+    mesaj += f"🌌 **Yatsı   :** `{ezan['yatsi']}`\n"
+    
+    try:
+        await ilk_mesaj.edit(mesaj)
     except Exception as hata:
         await hata_log(hata)
         await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')

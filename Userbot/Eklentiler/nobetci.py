@@ -6,7 +6,7 @@ from pathlib import Path
 
 DESTEK_KOMUT.update({
     Path(__file__).stem : {
-        "aciklama"     : "eczaneler.gen.tr'den nöbetçi eczane bilgilerini verir..",
+        "aciklama"     : "KekikSpatula'dan nöbetçi eczane bilgilerini verir..",
         "parametreler" : [
             "il ilçe"
             ],
@@ -17,7 +17,7 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
-from Userbot.Edevat.Spatula.nobetci_spatula import nobetci_eczane
+from KekikSpatula import NobetciEczane
 
 @Client.on_message(filters.command(['nobetci'],['!','.','/']))
 async def nobetci(client, message):
@@ -37,8 +37,8 @@ async def nobetci(client, message):
         await ilk_mesaj.edit("__Arama yapabilmek için `ilçe` **de** girmelisiniz..__")
         return
 
-    il   = girilen_yazi[1].lower()  # komut hariç birinci kelime
-    ilce = girilen_yazi[2].lower()  # komut hariç ikinci kelime
+    il   = girilen_yazi[1].replace('İ', "i").lower()  # komut hariç birinci kelime
+    ilce = girilen_yazi[2].replace('İ', "i").lower()  # komut hariç ikinci kelime
 
     tr2eng  = str.maketrans(" .,-*/+-ıİüÜöÖçÇşŞğĞ", "________iIuUoOcCsSgG")
     il      = il.translate(tr2eng)
@@ -46,8 +46,9 @@ async def nobetci(client, message):
 
     mesaj = f"**Aranan Nöbetçi Eczane :** `{ilce}` / `{il}`\n"
 
+    eczaneler = NobetciEczane(il, ilce).veri()['veri']
     try:
-        for eczane in nobetci_eczane(il, ilce, "json_veri"):
+        for eczane in eczaneler:
             mesaj += f"**\n\t⚕ {eczane['ad']}**"
             mesaj += "\n📍"
             if eczane['mahalle']:
