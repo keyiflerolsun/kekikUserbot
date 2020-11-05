@@ -52,7 +52,7 @@ async def ezan(client, message):
     mesaj += f"🌆 **İkindi  :** `{ezan['ikindi']}`\n"
     mesaj += f"🌃 **Akşam   :** `{ezan['aksam']}`\n"
     mesaj += f"🌌 **Yatsı   :** `{ezan['yatsi']}`\n"
-    
+
     try:
         await ilk_mesaj.edit(mesaj)
     except Exception as hata:
