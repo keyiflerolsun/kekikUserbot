@@ -35,7 +35,7 @@ async def log_yolla(client, message):
 
 async def hata_log(hata_soyle):
     hata_konsol  = f"\t\t[bold purple]{type(hata_soyle).__name__}[/] [bold magenta]||[/] [bold grey74]{hata_soyle}[/]"
-    hata_dosya   = f"\n\t\t\t\t\t{hata_soyle}\n\n"
+    hata_dosya   = f"\n\t\t{type(hata_soyle).__name__}\t»\t{hata_soyle}\n\n"
 
     log_ver(f"{hata_konsol}")                                        # zenginKonsol'a log gönder
 
