@@ -1,9 +1,9 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-import os
+from os import remove
 from glob import glob
 
-def icinden_gec(dizin):
+async def icinden_gec(dizin) -> None:
     gecici_liste = glob(f"{dizin}/*.*")
     for dosya in gecici_liste:
-        os.remove(dosya) 
+        remove(dosya) 

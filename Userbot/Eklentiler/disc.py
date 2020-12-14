@@ -17,18 +17,16 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from KekikSpatula import DiscUdemy
 
 @Client.on_message(filters.command(['disc'],['!','.','/']) & filters.me)
-async def disc(client, message):
+async def disc(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    girilen_yazi = message.command
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    girilen_yazi = message.command
 
     if len(girilen_yazi) == 1:
         await ilk_mesaj.edit("__Arama yapabilmek için `kategori` girmelisiniz..__")
@@ -40,7 +38,7 @@ async def disc(client, message):
     kategori   = kategori.translate(tr2eng)
 
     try:
-        udemy = DiscUdemy(kategori).veri()['veri']
+        udemy = DiscUdemy(kategori).veri['veri']
     except (IndexError, TypeError):
         await ilk_mesaj.edit(f'`{kategori}` __kategorisini bulamadım..__')
         return
@@ -54,5 +52,5 @@ async def disc(client, message):
     try:
         await ilk_mesaj.edit(mesaj, disable_web_page_preview = True)
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
+        return

@@ -17,15 +17,13 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 @Client.on_message(filters.command(['komut'], ['!','.','/']) & filters.me)
-async def komut(client, message):
+async def komut(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
 
 
@@ -34,5 +32,4 @@ async def komut(client, message):
     try:
         hata_denemesi()
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)

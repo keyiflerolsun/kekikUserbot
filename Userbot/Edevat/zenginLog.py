@@ -1,43 +1,34 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
+from pyrogram import Client
+from pyrogram.types import Message
 import datetime, pytz
-from Userbot import SESSION_ADI, log_ver
+from Userbot import SESSION_ADI, taban
 
 tarih   = lambda : datetime.datetime.now(pytz.timezone("Turkey")).strftime("%d-%m-%Y")
 saat    = lambda : datetime.datetime.now(pytz.timezone("Turkey")).strftime("%H:%M:%S")
 
-async def log_yolla(client, message):
-    log_dosya   = f"[{saat()} | {tarih()}] "
-    sohbet      = await client.get_chat(message.chat.id)
+async def log_yolla(client:Client, message:Message):
+    ad          = f"@{message.from_user.username}" if message.from_user.username else message.from_user.first_name
+    komut       = message.text
 
-    if message.from_user.username:
-        log_konsol  = f"[bold red]@{message.from_user.username}[/] [green]||[/] "
-        log_dosya  += f"@{message.from_user.username} | "
+    if message.chat.type not in ['private', 'bot']:
+        sohbet      = await client.get_chat(message.chat.id)
+        sohbet_adi  = f'@{sohbet.username}' if sohbet.username else sohbet.title
     else:
-        log_konsol  = f"[bold red]{message.from_user.first_name}[/] [green]||[/] "
-        log_dosya   = f"{message.from_user.first_name} | "
+        sohbet_adi  = message.chat.type
 
-    if message.chat.type in ['private', 'bot']:
-        log_konsol  += f"[yellow]{message.text}[/] "
-        log_dosya   += f"{message.text} "
-    else:
-        grup_ad      = f'@{sohbet.username}' if sohbet.username else sohbet.title
-        log_konsol  += f"[yellow]{message.text}[/]\t[green]||[/] [bold cyan]{grup_ad}[/] "
-        log_dosya   += f"{message.text} | {grup_ad} "
+    taban.log_salla(ad, komut, sohbet_adi)
 
-    log_konsol  += f"  [green]||[/] [magenta]{message.chat.type}[/]"
-    log_dosya   += f"\t| {message.chat.type}\n"
+    with open(f"@{SESSION_ADI}.log", "a+") as log_yaz:
+        log_yaz.write(f'[{saat()} | {tarih()}]' + ' {:20} || {:50} {:>2}|| {:^20}\n'.format(ad, komut, "", sohbet_adi))
 
-    log_ver(f"{log_konsol}")                                         # zenginKonsol'a log gönder
+    if not ad.startswith("@"):
+        ad = f"[{ad}](tg://user?id={message.from_user.id})"
 
-    with open(f"@{SESSION_ADI}.log", "a+") as log_yaz:               # dosyaya log yaz
-        log_yaz.write(log_dosya)
+async def hata_log(hata_:Exception, message:Message) -> None:
+    taban.hata_salla(hata_)
+    await message.edit(f'**Hata Var !**\n\n`{type(hata_).__name__}`\n\n__{hata_}__')
 
-async def hata_log(hata_soyle):
-    hata_konsol  = f"\t\t[bold purple]{type(hata_soyle).__name__}[/] [bold magenta]||[/] [bold grey74]{hata_soyle}[/]"
-    hata_dosya   = f"\n\t\t{type(hata_soyle).__name__}\t»\t{hata_soyle}\n\n"
-
-    log_ver(f"{hata_konsol}")                                        # zenginKonsol'a log gönder
-
-    with open(f"@{SESSION_ADI}.log", "a+") as log_yaz:               # dosyaya log yaz
-        log_yaz.write(hata_dosya)
+    with open(f"@{SESSION_ADI}.log", "a+") as log_yaz:
+        log_yaz.write(f"\n\t\t{type(hata_).__name__}\t»\t{hata_}\n\n")

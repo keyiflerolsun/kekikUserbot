@@ -1,16 +1,11 @@
+KekikTaban
+KekikSpatula
 setuptools
 pyrogram
 asyncio
 aiohttp
 tgcrypto
-requests
-pytz
-colorama
-rich
 python-dotenv
-beautifulsoup4
-lxml
-tabulate
 wget
 youtube_dl
 Pillow
@@ -18,4 +13,3 @@ humanize
 google-api-python-client
 oauth2client
 google_auth_oauthlib
-KekikSpatula==0.1.9

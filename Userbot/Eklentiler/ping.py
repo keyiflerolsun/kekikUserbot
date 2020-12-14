@@ -8,8 +8,7 @@ DESTEK_KOMUT.update({
     Path(__file__).stem : {
         "aciklama"  : "botun hayatta olup olmadığı kontrolü..",
         "kullanim"  : [
-            "mesaj",
-            "yanıtlanan mesaj"
+            None
             ],
         "ornekler"  : [
             ".ping"
@@ -18,18 +17,14 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
-from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj
+from pyrogram.types import Message
 import asyncio, datetime
 
 @Client.on_message(filters.command(['ping'], ['!','.','/']) & filters.me)
-async def ping(client, message):
+async def ping(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    _ = yanitlanan_mesaj(message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
 
     basla = datetime.datetime.now()
@@ -49,9 +44,8 @@ async def ping(client, message):
     try:
         await ilk_mesaj.edit(mesaj)
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
 
 @Client.on_message(filters.command(['json'], ['!','.','/']) & filters.me)
-async def jsn_ver(client, message):
+async def jsn_ver(client:Client, message:Message):
     await message.edit(f"```{message.reply_to_message}```")

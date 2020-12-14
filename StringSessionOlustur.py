@@ -3,7 +3,7 @@
 import asyncio
 from pyrogram import Client
 
-API_ID   = int(input("Telegram API ID: "))
+API_ID   = input("Telegram API ID: ")
 API_HASH = input("Telegram API HASH: ")
 
 async def session_olustur(api_id, api_hash):

@@ -2,7 +2,7 @@
 
 from os import listdir
 
-def eklentilerim():
+def eklentilerim() -> str:
     eklenti_listele = ""
 
     for dosya in listdir("./Userbot/Eklentiler/"):

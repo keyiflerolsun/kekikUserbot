@@ -1,9 +1,9 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-def zaman_donustur(saniye: int) -> str:
-    dakika, saniye = divmod(saniye, 60)
-    saat, dakika = divmod(dakika, 60)
-    gun, saat = divmod(saat, 24)
+async def zaman_donustur(saniye: int) -> str:
+    dakika, saniye  = divmod(saniye, 60)
+    saat, dakika    = divmod(dakika, 60)
+    gun, saat       = divmod(saat, 24)
     toparla = (
         ((str(gun) + " gün, ") if gun else "")
         + ((str(saat) + " saat, ") if saat else "")

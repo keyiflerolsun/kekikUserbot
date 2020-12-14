@@ -17,21 +17,19 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from KekikSpatula import Ezan
 
 @Client.on_message(filters.command(['ezan'],['!','.','/']) & filters.me)
-async def ezan(client, message):
+async def ezan(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    girilen_yazi = message.command
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    girilen_yazi = message.command
 
     if len(girilen_yazi) == 1:
-        await ilk_mesaj.edit("__Arama yapabilmek için `il` ve `ilçe` girmelisiniz..__")
+        await ilk_mesaj.edit("__Arama yapabilmek için `il` girmelisiniz..__")
         return
 
     il   = girilen_yazi[1].replace('İ', "i").lower()  # komut hariç birinci kelime
@@ -40,7 +38,7 @@ async def ezan(client, message):
     il      = il.translate(tr2eng)
 
     try:
-        ezan = Ezan(il).veri()['veri'][0]
+        ezan = Ezan(il).veri['veri'][0]
     except IndexError:
         await ilk_mesaj.edit(f'`{il}` __diye bir yer bulamadım..__')
         return
@@ -56,5 +54,5 @@ async def ezan(client, message):
     try:
         await ilk_mesaj.edit(mesaj)
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
+        return

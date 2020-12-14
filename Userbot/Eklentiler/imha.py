@@ -35,15 +35,12 @@ async def admin_kontrol(client:Client, message:Message) -> bool:
     return durum_kontrol.status in yonetici
 
 @Client.on_message(filters.command("imha", ['!','.','/']) & filters.me)
-async def imha(client, message):
+async def imha(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    cevaplanan_mesaj    = message.reply_to_message
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    cevaplanan_mesaj = message.reply_to_message
 
     if cevaplanan_mesaj is None:
         await ilk_mesaj.edit("__içinden geçmek istediğiniz yerden mesaj yanıtlayın__")
@@ -63,7 +60,7 @@ async def imha(client, message):
         return
 
     silinecek_mesaj_idleri = []
-    silinen_mesaj_sayisi = 0
+    silinen_mesaj_sayisi   = 0
 
     for gecerli_mesaj_id in range(cevaplanan_mesaj.message_id, message.message_id):
         silinecek_mesaj_idleri.append(gecerli_mesaj_id)
@@ -75,7 +72,7 @@ async def imha(client, message):
                 message_ids = silinecek_mesaj_idleri,
                 revoke      = True
             )
-            silinen_mesaj_sayisi += len(silinecek_mesaj_idleri)
+            silinen_mesaj_sayisi  += len(silinecek_mesaj_idleri)
             silinecek_mesaj_idleri = []
 
     # Eğer 100'den az kaldıysa;

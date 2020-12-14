@@ -17,18 +17,16 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from KekikSpatula import NobetciEczane
 
-@Client.on_message(filters.command(['nobetci'],['!','.','/']))
-async def nobetci(client, message):
+@Client.on_message(filters.command(['nobetci'],['!','.','/']) & filters.me)
+async def nobetci(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    girilen_yazi = message.command
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    girilen_yazi = message.command
 
     if len(girilen_yazi) == 1:
         await ilk_mesaj.edit("__Arama yapabilmek için `il` ve `ilçe` girmelisiniz..__")
@@ -46,11 +44,11 @@ async def nobetci(client, message):
 
     mesaj = f"**Aranan Nöbetçi Eczane :** `{ilce}` / `{il}`\n"
 
-    eczaneler = NobetciEczane(il, ilce).veri()['veri']
+    eczaneler = NobetciEczane(il, ilce).veri['veri']
     try:
         for eczane in eczaneler:
             mesaj += f"**\n\t⚕ {eczane['ad']}**"
-            mesaj += "\n📍"
+            mesaj += f"\n📍"
             if eczane['mahalle']:
                 mesaj += f"`{eczane['mahalle']}`\n"
             mesaj += f"__{eczane['adres']}__"
@@ -62,5 +60,5 @@ async def nobetci(client, message):
     except IndexError:
         await ilk_mesaj.edit(f'__`{ilce}` / `{il}` diye bir yer bulamadım..__')
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
+        return

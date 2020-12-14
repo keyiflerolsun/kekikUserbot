@@ -22,14 +22,17 @@ from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj
 from Userbot import SESSION_ADI
 from Userbot.Edevat.eklenti_listesi import eklentilerim
 from pyrogram import Client, filters
+from pyrogram.types import Message
 import asyncio, os
 
 mesaj_baslangici = '`Hallediyorum..`'
 
 @Client.on_message(filters.command(['eklentilist'], ['!','.','/']) & filters.me)
-async def eklenti_list(client, message):
+async def eklenti_list(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
 
     mesaj = "__Eklentilerim;__\n"
     mesaj += eklentilerim()
@@ -37,15 +40,15 @@ async def eklenti_list(client, message):
     try:
         await ilk_mesaj.edit(mesaj)
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
 
 @Client.on_message(filters.command(['eklentiver'], ['!','.','/']) & filters.me)
-async def eklenti_ver(client, message):
+async def eklenti_ver(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    yanitlanacak_mesaj = yanitlanan_mesaj(message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
-
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    yanit_id  = await yanitlanan_mesaj(message)
+    #------------------------------------------------------------- Başlangıç >
     girilen_yazi = message.text
 
     if len(girilen_yazi.split()) == 1:
@@ -61,16 +64,18 @@ async def eklenti_ver(client, message):
             document                = f"./Userbot/Eklentiler/{dosya}.py",
             caption                 = f"__{SESSION_ADI}__ `{dosya}` __eklentisi..__",
             disable_notification    = True,
-            reply_to_message_id     = yanitlanacak_mesaj
+            reply_to_message_id     = yanit_id
             )
 
     else:
         await ilk_mesaj.edit('**Dosya Bulunamadı!**')
 
 @Client.on_message(filters.command(['eklential'], ['!','.','/']) & filters.me)
-async def eklenti_al(client, message):
+async def eklenti_al(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("`Hallediyorum..`")
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
     cevaplanan_mesaj = message.reply_to_message
 
     if len(message.command) == 1 and cevaplanan_mesaj.document:
@@ -91,15 +96,17 @@ async def eklenti_al(client, message):
             return
 
         except Exception as hata:
-            await hata_log(hata)
-            await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+            await hata_log(hata, ilk_mesaj)
+            return
 
     await ilk_mesaj.edit('__python betiği yanıtlamanız gerekmekte__')
 
 @Client.on_message(filters.command(['eklentisil'], ['!','.','/']) & filters.me)
-async def eklenti_sil(client, message):
+async def eklenti_sil(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
 
     if len(message.command) == 2:
         eklenti_dizini = f"./Userbot/Eklentiler/{message.command[1]}.py"

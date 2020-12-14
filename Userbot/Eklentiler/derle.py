@@ -20,20 +20,18 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from Userbot.Edevat.Spatula.derleyici_spatula import calistir
 from os import remove
 
 @Client.on_message(filters.command(['derle'], ['!','.','/']) & filters.me)
-async def derle(client, message):
+async def derle(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
     girilen_yazi        = message.command
     cevaplanan_mesaj    = message.reply_to_message
-    #------------------------------------------------------------- Başlangıç >
 
     if cevaplanan_mesaj is None:
         if len(girilen_yazi) == 1:
@@ -55,11 +53,7 @@ async def derle(client, message):
         with open(gelen_dosya, "rb") as oku:
             veri_listesi = oku.readlines()
 
-        inen_veri = ""
-        for veri in veri_listesi:
-            inen_veri += veri.decode("UTF-8")
-
-        kod = inen_veri
+        kod = "".join(veri.decode("UTF-8") for veri in veri_listesi)
 
         remove(gelen_dosya)
 
@@ -81,5 +75,5 @@ async def derle(client, message):
     except KeyError:
         await ilk_mesaj.edit('__İstediğin dil maalesef benim sözlüğümde yok..__\n\n')
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
+        return

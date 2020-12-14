@@ -2,7 +2,7 @@
 
 import re, unicodedata
 
-def slugify(deger, allow_unicode=False):
+async def slugify(deger, allow_unicode=False) -> str:
     """
     'Allow_unicode' False ise ASCII'ye dönüştürür.
     Boşlukları veya tekrarlanan kısa çizgileri tek tirelere dönüştürür.

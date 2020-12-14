@@ -1,10 +1,11 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
-from Userbot.Edevat._ytdl.link_islemleri import link_ayikla
+from pyrogram.types import Message
 from Userbot import INDIRME_ALANI
 import youtube_dl, os, wget
 from PIL import Image
 from youtube_dl.utils import sanitize_filename
+from typing import Any
 
 class LogYok(object):
     def debug(self, msg):
@@ -16,7 +17,7 @@ class LogYok(object):
     def error(self, msg):
         pass
 
-async def ytdl_indirici(mesaj, link, parametre=None):
+async def ytdl_indirici(mesaj:Message, link:str, parametre:str=None) -> Any:
     parametreler = {
         'outtmpl' : os.path.join(f"{INDIRME_ALANI}/", '%(title)s.%(ext)s'),
         'writethumbnail': True,
@@ -39,8 +40,6 @@ async def ytdl_indirici(mesaj, link, parametre=None):
         })
 
     ytdl = youtube_dl.YoutubeDL(parametreler)
-
-    link = link_ayikla(link)[0]
 
     try:
         bilgiler = ytdl.extract_info(link, download=False)

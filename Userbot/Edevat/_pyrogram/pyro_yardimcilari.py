@@ -1,9 +1,10 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
+from typing import Any
 from pyrogram import Client
 from pyrogram.types import Message
 
-def yanitlanan_mesaj(message):
+async def yanitlanan_mesaj(message:Message) -> Any:
     yanitlanan_id = None
 
     if message.reply_to_message:
@@ -14,7 +15,7 @@ def yanitlanan_mesaj(message):
 
     return yanitlanan_id
 
-def kullanici(message:Message):
+async def kullanici(message:Message) -> Any:
     cevaplanan_mesaj = message.reply_to_message
 
     if cevaplanan_mesaj:
@@ -27,7 +28,7 @@ def kullanici(message:Message):
 
     return kullanici_adi, kullanici_id
 
-async def kullanici_foto(client:Client, message:Message):
+async def kullanici_foto(client:Client, message:Message) -> Any:
     cevaplanan_mesaj = message.reply_to_message
 
     if cevaplanan_mesaj:

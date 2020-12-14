@@ -1,6 +1,6 @@
 # https://github.com/Skuzzy_xD/TelePyroBot
 
-def okunabilir_byte(boyut: int) -> str:
+async def okunabilir_byte(boyut: int) -> str:
     """baytları okunabilir biçime dönüştürür.
 
     Arg:

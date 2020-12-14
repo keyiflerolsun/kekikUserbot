@@ -8,14 +8,17 @@ from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj, kullani
 from Userbot.Edevat.deldog import deldog
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from time import time
 
 mesaj_baslangici = '`Hallediyorum..`'
 
 @Client.on_message(filters.command(['yardim'], ['!','.','/']) & filters.me)
-async def yardim_mesaji(client, message):
+async def yardim_mesaji(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
 
     basla = time()
     await ilk_mesaj.edit("__Aranıyor...__")
@@ -32,18 +35,19 @@ Kullanabileceğim komutlar ise eklentilerimde gizli..\n\n"""
 
     bitir = time()
     sure = bitir - basla
-    mesaj += f"\n**Tepki Süresi :** `{str(sure)[:4]} sn`"
+    mesaj += f"\n**Tepki Süresi :** `{sure * 1000:.3f} ms`"
 
     try:
         await ilk_mesaj.edit(mesaj, disable_web_page_preview=True)
     except Exception as hata:
-        await hata_log(hata)
-        await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+        await hata_log(hata, ilk_mesaj)
 
 @Client.on_message(filters.command(['destek'], ['!','.','/']) & filters.me)
-async def destek(client, message):
+async def destek(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
 
     girilen_yazi = message.text.split()
 
@@ -82,24 +86,27 @@ async def destek(client, message):
     await ilk_mesaj.edit(mesaj)
 
 @Client.on_message(filters.command(['logsalla'], ['!','.','/']) & filters.me)
-async def logsalla(client, message):
+async def logsalla(client:Client, message:Message):
     await log_yolla(client, message)
-    yanitlanacak_mesaj = yanitlanan_mesaj(message)
+    yanit_id = await yanitlanan_mesaj(message)
 
-    raw_log = await deldog(message, open(f"@{SESSION_ADI}.log", "r").read())
+    with open(f"@{SESSION_ADI}.log", "r") as dosya_log:
+        raw_log = await deldog(dosya_log.read())
 
     await message.reply(
         f"**Log istersin de vermez miyim..**\n\n__[@{SESSION_ADI} Logları]({raw_log})__",
         disable_web_page_preview    = True,
-        reply_to_message_id         = yanitlanacak_mesaj
+        reply_to_message_id         = yanit_id
     )
 
 @Client.on_message(filters.command(['envsalla'], ['!','.','/']) & filters.me)
-async def envsalla(client, message):
+async def envsalla(client:Client, message:Message):
+    # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit(mesaj_baslangici)
+    ilk_mesaj = await message.edit(mesaj_baslangici, disable_web_page_preview = True)
+    #------------------------------------------------------------- Başlangıç >
 
-    kullanici_adi, kullanici_id = kullanici(message)
+    kullanici_adi, kullanici_id = await kullanici(message)
 
     env_bilgileri = f"""__İşte {kullanici_adi} » {SESSION_ADI} Bilgileri;__
 

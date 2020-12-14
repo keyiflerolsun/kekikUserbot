@@ -17,19 +17,17 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from time import time
 import requests
 
 @Client.on_message(filters.command(['gg'], ['!','.','/']) & filters.me)
-async def gg_komut(client, message):                           # fonksiyon oluşturuyoruz
+async def gg_komut(client:Client, message:Message):                           # fonksiyon oluşturuyoruz
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    girilen_yazi        = message.command
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    girilen_yazi        = message.command
 
     if len(girilen_yazi) == 1:
         await ilk_mesaj.edit("**Arama yapabilmek için `bişeyler` girmelisiniz..**")
@@ -55,8 +53,7 @@ async def gg_komut(client, message):                           # fonksiyon oluş
         try:                                                                # Dene
             await ilk_mesaj.edit(mesaj, disable_web_page_preview = True)
         except Exception as hata:
-            await hata_log(hata)
-            await ilk_mesaj.edit(f'**Hata Var !**\n\n`{type(hata).__name__}`\n\n__{hata}__')
+            await hata_log(hata, ilk_mesaj)
             return
     else:                                                                   # Eğer tepki yoksa
         await ilk_mesaj.edit("__API Yanıt Vermedi Kanka..__")               # uyarı ver

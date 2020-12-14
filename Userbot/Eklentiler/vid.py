@@ -28,23 +28,23 @@ from Userbot.Edevat._ytdl.ytdl_indirici import ytdl_indirici
 from Userbot.Edevat._pyrogram.progress import pyro_progress
 from Userbot.Edevat.gecici_alan_temizleyici import icinden_gec
 from Userbot import INDIRME_ALANI, SESSION_ADI
-from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj
+from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj, kullanici
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from asyncio import sleep
 import time
 
 @Client.on_message(filters.command(['vid'], ['!','.','/']) & filters.me)
-async def vid(client, message):
+async def vid(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    yanitlanacak_mesaj = yanitlanan_mesaj(message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
+    yanit_id  = await yanitlanan_mesaj(message)
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
     girilen_yazi        = message.text
     cevaplanan_mesaj    = message.reply_to_message
+
+    kullanici_adi, _ = await kullanici(message)
 
     try:
         if (not cevaplanan_mesaj) and (len(message.command) == 1):
@@ -52,12 +52,12 @@ async def vid(client, message):
             return
 
         if not cevaplanan_mesaj:
-            verilen_link = link_ayikla(girilen_yazi)[0]
+            verilen_link = await link_ayikla(girilen_yazi)
         elif cevaplanan_mesaj.text:
             try:
-                verilen_link = link_ayikla(cevaplanan_mesaj.text)[0]
+                verilen_link = await link_ayikla(cevaplanan_mesaj.text)
             except TypeError:
-                verilen_link = link_ayikla(girilen_yazi)[0]
+                verilen_link = await link_ayikla(girilen_yazi)
     except TypeError:
         await ilk_mesaj.edit('__jajajajaj güldük..__')
         return
@@ -65,11 +65,10 @@ async def vid(client, message):
     simdiki_zaman = time.time()
     if (len(message.command) > 1) and (message.command[1] == 'mp3'):
         try:
-            yt_baslik, yt_resim, inen_veri, ilk_mesaj = await ytdl_indirici(ilk_mesaj, verilen_link, parametre='mp3')
+            yt_baslik, yt_resim, inen_veri, ilk_mesaj = await ytdl_indirici(ilk_mesaj, verilen_link[0], parametre='mp3')
         except UnboundLocalError:
             await ilk_mesaj.edit('__jajajajaj güldük..__')
             return
-
         indirdim_kanka = await client.send_audio(
             chat_id             = message.chat.id,
             audio               = inen_veri,
@@ -79,15 +78,14 @@ async def vid(client, message):
             thumb               = yt_resim,
             progress            = pyro_progress,
             progress_args       = (f"__{yt_baslik}__\n\n**Yüklüyorum kankamm...**", ilk_mesaj, simdiki_zaman),
-            reply_to_message_id = yanitlanacak_mesaj
+            reply_to_message_id = yanit_id
         )
     else:
         try:
-            yt_baslik, yt_resim, inen_veri, ilk_mesaj = await ytdl_indirici(ilk_mesaj, verilen_link)
+            yt_baslik, yt_resim, inen_veri, ilk_mesaj = await ytdl_indirici(ilk_mesaj, verilen_link[0])
         except UnboundLocalError:
             await ilk_mesaj.edit('__jajajajaj güldük..__')
             return
-
         indirdim_kanka = await client.send_video(
             chat_id             = message.chat.id,
             video               = inen_veri,
@@ -95,16 +93,17 @@ async def vid(client, message):
             thumb               = yt_resim,
             progress            = pyro_progress,
             progress_args       = (f"__{yt_baslik}__\n\n**Yüklüyorum kankamm...**", ilk_mesaj, simdiki_zaman),
-            reply_to_message_id = yanitlanacak_mesaj
+            reply_to_message_id = yanit_id
         )
+
 
     if (cevaplanan_mesaj) and (cevaplanan_mesaj.via_bot):
         await cevaplanan_mesaj.delete()
 
     print('\n')
 
-    icinden_gec(INDIRME_ALANI)
+    await icinden_gec(INDIRME_ALANI)
 
     await ilk_mesaj.delete()
     await sleep(5)
-    await indirdim_kanka.edit(f"**{yt_baslik}**")
+    await indirdim_kanka.edit(f"**{yt_baslik}**") 

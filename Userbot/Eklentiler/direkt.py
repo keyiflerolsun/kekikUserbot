@@ -1,6 +1,6 @@
 # https://github.com/muhammedfurkan/UniBorg/blob/master/stdplugins/direct_link.py
 
-from Userbot.Edevat.zenginLog import log_yolla, hata_log
+from Userbot.Edevat.zenginLog import log_yolla
 from Userbot import DESTEK_KOMUT
 from pathlib import Path
 
@@ -18,6 +18,7 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 import json, re, urllib.parse, requests
 from os import popen
 from random import choice
@@ -25,13 +26,10 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 
 @Client.on_message(filters.command(['direkt'], ['!','.','/']) & filters.me)
-async def direkt(client, message):
+async def direkt(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
 
     await ilk_mesaj.edit("`İşleniyor...`")

@@ -18,20 +18,18 @@ DESTEK_KOMUT.update({
 })
 
 from pyrogram import Client, filters
+from pyrogram.types import  Message
 from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj
 import asyncio, random
 
 @Client.on_message(filters.command("stik", ['!','.','/']) & filters.me)
-async def stik(client, message):
+async def stik(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
-    yanitlanacak_mesaj = yanitlanan_mesaj(message)
-    ilk_mesaj = await message.edit("__Bekleyin..__",
-        disable_web_page_preview    = True,
-        parse_mode                  = "Markdown"
-    )
-    cevaplanan_mesaj    = message.reply_to_message
+    yanit_id  = await yanitlanan_mesaj(message)
+    ilk_mesaj = await message.edit("__Bekleyin..__", disable_web_page_preview = True)
     #------------------------------------------------------------- Başlangıç >
+    cevaplanan_mesaj = message.reply_to_message
 
     if cevaplanan_mesaj is None:
         await ilk_mesaj.edit("__stikır yapılacak mesajı yanıtlamalısın..__")
@@ -69,6 +67,6 @@ async def stik(client, message):
 
     await ilk_mesaj.edit("`Tamamlandı !`", parse_mode="md")
     stik_id = mesaj[0]["sticker"]["file_id"]
-    await message.reply_sticker(stik_id, reply_to_message_id=yanitlanacak_mesaj)
+    await message.reply_sticker(stik_id, reply_to_message_id=yanit_id)
     await client.read_history(stik_botu)
     await ilk_mesaj.delete()
