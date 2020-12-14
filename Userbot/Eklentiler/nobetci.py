@@ -20,7 +20,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from KekikSpatula import NobetciEczane
 
-@Client.on_message(filters.command(['nobetci'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['nobetci'], ['!','.','/']) & filters.me)
 async def nobetci(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)

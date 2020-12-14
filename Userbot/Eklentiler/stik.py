@@ -60,7 +60,7 @@ async def stik(client:Client, message:Message):
                 if hata_limit == 3:
                     break
 
-                await hata_log(hata)
+                await hata_log(hata, ilk_mesaj)
                 await ilk_mesaj.edit(f'**Hata Var !**\n\n__{hata}')
 
                 hata_limit += 1

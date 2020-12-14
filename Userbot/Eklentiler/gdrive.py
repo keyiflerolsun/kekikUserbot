@@ -42,7 +42,7 @@ from Userbot.Edevat._pyrogram.progress import pyro_progress
 from Userbot.Edevat._pyrogram.pyro_yardimcilari import yanitlanan_mesaj
 from datetime import datetime
 
-@Client.on_message(filters.command(['gyetki'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gyetki'], ['!','.','/']) & filters.me)
 async def gyetki(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -54,7 +54,7 @@ async def gyetki(client, message):
 
     await kod_al(ilk_mesaj)
 
-@Client.on_message(filters.command(['gtoken'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gtoken'], ['!','.','/']) & filters.me)
 async def gtoken(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -67,17 +67,17 @@ async def gtoken(client, message):
     try:
         await token_olustur(ilk_mesaj, message.command[1])
     except IndexError as hata:
-        await hata_log(hata)
+        await hata_log(hata, ilk_mesaj)
         await ilk_mesaj.edit('`Kod Girmedin..`')
         return
     except FlowExchangeError as hata:
-        await hata_log(hata)
+        await hata_log(hata, ilk_mesaj)
         await ilk_mesaj.edit('`Vermiş olduğun kod geçersiz..`')
         return
 
     await ilk_mesaj.edit('**Drive Yetkilendirme Başarılı!**')
 
-@Client.on_message(filters.command(['gortaklar'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gortaklar'], ['!','.','/']) & filters.me)
 async def gortaklar(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -93,7 +93,7 @@ async def gortaklar(client, message):
 
     await ilk_mesaj.edit(await ortak_drive_listesi())
 
-@Client.on_message(filters.command(['gdisk'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gdisk'], ['!','.','/']) & filters.me)
 async def gdisk(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -133,7 +133,7 @@ async def gdisk(client, message):
 
     await ilk_mesaj.edit(f"`{ORTAK_DRIVE_ADI}` __varsayılan olarak ayarlandı..__")
 
-@Client.on_message(filters.command(['gdizin'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gdizin'], ['!','.','/']) & filters.me)
 async def gdizin(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -155,7 +155,7 @@ async def gdizin(client, message):
     except KeyError:
         await ilk_mesaj.edit("__Burdasın kanka;__\n\n**Root**")
 
-@Client.on_message(filters.command(['gara'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gara'], ['!','.','/']) & filters.me)
 async def gara(client, message):
     # < Başlangıç
     await log_yolla(client, message)
@@ -174,11 +174,11 @@ async def gara(client, message):
             disable_web_page_preview = True
         )
     except (MessageTooLong, OSError) as hata:
-        await hata_log(hata)
+        await hata_log(hata, ilk_mesaj)
         await ilk_mesaj.edit('__Çıktı çok uzun kanka daha spesifik şekilde aramalısın..__')
         return
 
-@Client.on_message(filters.command(['gyukle'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['gyukle'], ['!','.','/']) & filters.me)
 async def gyukle(client, message):
     # < Başlangıç
     await log_yolla(client, message)

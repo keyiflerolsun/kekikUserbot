@@ -20,7 +20,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from KekikSpatula import Google
 
-@Client.on_message(filters.command(['google'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['google'], ['!','.','/']) & filters.me)
 async def google(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)

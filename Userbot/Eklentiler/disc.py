@@ -20,7 +20,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from KekikSpatula import DiscUdemy
 
-@Client.on_message(filters.command(['disc'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['disc'], ['!','.','/']) & filters.me)
 async def disc(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)

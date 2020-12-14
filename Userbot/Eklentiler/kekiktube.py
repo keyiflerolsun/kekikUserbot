@@ -20,7 +20,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from KekikSpatula import KekikTube
 
-@Client.on_message(filters.command(['kekiktube'],['!','.','/']) & filters.me)
+@Client.on_message(filters.command(['kekiktube'], ['!','.','/']) & filters.me)
 async def kekiktube(client:Client, message:Message):
     # < Başlangıç
     await log_yolla(client, message)
